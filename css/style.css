@@ -1,0 +1,16 @@
+/* GENERAL */
+
+
+/* HEADER */
+
+header {
+    padding: 20px;
+}
+
+
+/* MAP */
+
+#map {
+    height: 600px;
+    width: 100%
+}

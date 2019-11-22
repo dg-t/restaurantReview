@@ -28,7 +28,6 @@ async function getRestaurants() {
                 map: map
             });
 
-
             // assign value for each var for nested forEach
             ratingArr = i.ratings;
             sumStars = 0;
@@ -62,7 +61,7 @@ async function getRestaurants() {
                 infoRestaurnat.setContent(i.restaurantName.bold().fontsize(4) + '<br>' + i.address + '<br>' + sumRatingStars + ' Stars');
                 lastWindow = infoRestaurnat;
             });
-        }); // here )
+        });
     }
 
 }

@@ -41,7 +41,33 @@ var initMap = function() {
                 map.setCenter(userPos);
                 map.setZoom(15);
 
-                getRestaurants();
+                // Request places to display
+                request = {
+                    location: userPos,
+                    radius: '1000',
+                    types: ['restaurant']
+                };
+
+                // Initiate a place nearby search
+                service = new google.maps.places.PlacesService(map);
+                service.nearbySearch(request, callback);
+
+                // Add eventListener to dispaly results depending on mouse click
+                map.addListener('click', function(event) {
+                    // Center map to click position, clear previous markers and list
+                    map.setCenter(event.latLng)
+                    clearMarkers(placeMarkers);
+                    clearList();
+
+                    // Make a new request when the event is triggered 
+                    request = {
+                        location: event.latLng,
+                        radius: '1000',
+                        types: ['restaurant']
+                    };
+                    // Initiate new nearby search
+                    service.nearbySearch(request, callback);
+                });
 
                 // EventListener to show user infoWindow
                 markerUserPos.addListener('click', function() {

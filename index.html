@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Restauran Review</title>
+    <title>Restaurants Review</title>
     <link rel="icon" type="image/png" href="img/rate.png">
-    <meta name="description" content="restaurant review application">
+    <meta name="description" content="Restaurants review application">
     <meta name="keywords" content="restaurant review application at OpenClassrooms">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-select.min.css">
@@ -26,18 +26,20 @@
     <div class='container-fluid'>
         <div class='row'>
             <div id='map' class='col-sm-8'></div>
-            <div class='col-sm-4'></div>
+            <div class='col-sm-4' id='showRestaurant'></div>
         </div>
 
     </div>
 
 
-    <script src='js/app.js'></script>
-    <!-- async lets the browser render the rest of your website while the Maps JavaScript API loads -->
-    <!-- when API is ready it will call the funct using the callback parameter -->
-    <!-- if omit async attribute and callback parameter, loading API will block until the API is downloaded -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHuRQFDRRdnbBmW_IElnf1uNkDHmRIsec&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=MY_API_KEY&libraries=places&v=3&callback=initMap">
     </script>
+    <script src='js/app.js'></script>localRestaurant
+    <script src='js/localRestaurants.js'></script>
+    <!-- async lets the browser render the rest of your website while the Maps JavaScript API loads 
+    when API is ready it will call the funct using the callback parameter 
+    if omit async attribute and callback parameter, loading API will block until the API is downloaded -->
+
 
 </body>
 

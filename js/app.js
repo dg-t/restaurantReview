@@ -1,54 +1,71 @@
 // MAP
 
 // Variables
-var map, marker, infoWindow;
+var map, pos, markerUserPos, infoLocationError, service, userPos, request;
+var lastWindow = null;
+var markers = [];
+var divRest = document.getElementById('showRestaurant');
+var placeMarkers = [];
 
 // Map function
-function initMap() {
+var initMap = function() {
 
+    // Set default position to Spain
+    pos = { lat: 40.4637, lng: 3.7492 };
     // Create a map from the Map constructor
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {
-            // Spain
-            lat: 40.4637,
-            lng: 3.7492
-        },
+        center: pos,
         zoom: 4
     });
 
-    // Create marker
-    marker = new google.maps.Marker({
+    // Create infoWindow for geolocation error handling and user position
+    infoLocationError = new google.maps.InfoWindow;
+    infoCurrentPos = new google.maps.InfoWindow;
+    // Create marker for user current position
+    markerUserPos = new google.maps.Marker({
         map: map,
+        icon: {
+            url: 'http://earth.google.com/images/kml-icons/track-directional/track-0.png',
+            scaledSize: new google.maps.Size(30, 30)
+        }
     });
-
-    // Create infoWindow
-    infoWindow = new google.maps.InfoWindow;
 
     // Get user geolocation
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-            };
+                userPos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                markerUserPos.setPosition(userPos);
+                map.setCenter(userPos);
+                map.setZoom(15);
 
-            marker.setPosition(pos);
-            map.setCenter(pos);
-            map.setZoom(15)
-        }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-        });
+                getRestaurants();
+
+                // EventListener to show user infoWindow
+                markerUserPos.addListener('click', function() {
+                    // check if a window is open, and close it when opening another
+                    if (lastWindow) lastWindow.close();
+                    infoCurrentPos.open(map, markerUserPos);
+                    infoCurrentPos.setContent('Your position');
+                    lastWindow = infoCurrentPos;
+                });
+            },
+            function() {
+                handleLocationError(true, infoLocationError, map.getCenter());
+            });
     } else {
         // If browser doesn't support geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
+        handleLocationError(false, infoLocationError, map.getCenter());
     }
 }
 
-// Geolocation error function
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
+// Geolocation error handling
+var handleLocationError = function(browserHasGeolocation, infoLocationError, pos) {
+    infoLocationError.setPosition(pos);
+    infoLocationError.setContent(browserHasGeolocation ?
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation');
-    infoWindow.open(map);
+    infoLocationError.open(map);
 }

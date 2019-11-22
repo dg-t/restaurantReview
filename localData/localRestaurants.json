@@ -1,0 +1,92 @@
+[{
+        "restaurantName": "Fideos",
+        "address": "Carrer de Provença, 140, 08029 Barcelona",
+        "lat": 41.387013,
+        "long": 2.151292,
+        "ratings": [{
+                "stars": 4,
+                "comment": "Great! But not many veggie options."
+            },
+            {
+                "stars": 5,
+                "comment": "My favorite restaurant!"
+            },
+            {
+                "stars": 2,
+                "comment": "food was ok! Service was very slow!"
+            }
+        ]
+    },
+    {
+        "restaurantName": "Pizza Pazza",
+        "address": "Carrer de Muntaner, 109, 08036 Barcelona",
+        "lat": 41.389286,
+        "long": 2.155600,
+        "ratings": [{
+                "stars": 5,
+                "comment": "Tiny pizzeria next to Hospital Clinic!"
+            },
+            {
+                "stars": 3,
+                "comment": "Meh, it was fine."
+            },
+            {
+                "stars": 5,
+                "comment": "Best pizzeria in the city, they use only organic ingredients and taste is amazing"
+            },
+            {
+                "stars": 5,
+                "comment": "fast service! great pizzas!"
+            }
+        ]
+    },
+    {
+        "restaurantName": "Ramen Ya",
+        "address": "Carrer de València, 143-123, 08011 Barcelona",
+        "lat": 41.387003,
+        "long": 2.155637,
+        "ratings": [{
+                "stars": 5,
+                "comment": "Best Ramen in Barcelona."
+            },
+            {
+                "stars": 5,
+                "comment": "My favorite ramen shop!"
+            },
+            {
+                "stars": 4,
+                "comment": "Ramen was amazing! service could improve"
+            }
+        ]
+    },
+    {
+        "restaurantName": "The burger stop",
+        "address": "Carrer de Mallorca, 80-98, 08029 Barcelona",
+        "lat": 41.385087,
+        "long": 2.150921,
+        "ratings": [{
+                "stars": 2,
+                "comment": "Terrible service! food was cold"
+            },
+            {
+                "stars": 4,
+                "comment": "Average burger shop with very few choices"
+            }
+        ]
+    },
+    {
+        "restaurantName": "Paella and Sangria",
+        "address": "Av. de Roma, 111-93, 08029 Barcelona",
+        "lat": 41.384431,
+        "long": 2.151892,
+        "ratings": [{
+                "stars": 5,
+                "comment": "Great paella, with amazing prices"
+            },
+            {
+                "stars": 4,
+                "comment": "Food was avarege, sangria was very very nice"
+            }
+        ]
+    }
+]

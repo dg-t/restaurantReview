@@ -19,3 +19,24 @@ header {
     height: 600px;
     overflow: auto;
 }
+
+
+/* SECOND PAGE STYLE */
+
+#nameRest {
+    color: red;
+    text-align: center;
+    padding: 10px;
+}
+
+#streetView {
+    height: 500px;
+    width: 80%;
+    padding: 20px;
+    margin: 0 5%;
+}
+
+#infoRestaurant {
+    height: 500px;
+    overflow: auto;
+}

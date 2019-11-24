@@ -88,7 +88,7 @@ var initMap = function() {
 }
 
 // Geolocation error handling
-var handleLocationError = function(browserHasGeolocation, infoLocationError, pos) {
+const handleLocationError = function(browserHasGeolocation, infoLocationError, pos) {
     infoLocationError.setPosition(pos);
     infoLocationError.setContent(browserHasGeolocation ?
         'Error: The Geolocation service failed.' :

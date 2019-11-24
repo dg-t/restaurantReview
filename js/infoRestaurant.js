@@ -1,5 +1,8 @@
+// Define variables
+var bounds, place, defaultIconRest, highlightedIconRest, markerRest, placeInfo, service, innerHTML, markerIcon;
+
 // Callback function to check status is ok to display restaurants for nearbySearch()
-var callback = function(results, status) {
+const callback = function(results, status) {
 
     // If status is OK return markers
     if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -8,20 +11,20 @@ var callback = function(results, status) {
 }
 
 // Create marker for restaurants
-var createMarkers = function(places) {
+const createMarkers = function(places) {
     // Bound map to specific size
-    var bounds = new google.maps.LatLngBounds();
+    bounds = new google.maps.LatLngBounds();
 
     // Loop for all places found
-    for (var i = 0; i < places.length; i++) {
-        var place = places[i];
+    for (i = 0; i < places.length; i++) {
+        place = places[i];
 
         // Style marker on hoover
-        var defaultIconRest = styleMarker('red');
-        var highlightedIconRest = styleMarker('ylw');
+        defaultIconRest = styleMarker('red');
+        highlightedIconRest = styleMarker('ylw');
 
         // Create marker constructor for Restaurants
-        var markerRest = new google.maps.Marker({
+        markerRest = new google.maps.Marker({
             map: map,
             position: place.geometry.location,
             icon: defaultIconRest,
@@ -34,7 +37,7 @@ var createMarkers = function(places) {
         bounds.extend(markerRest.position);
 
         // InfoWindow constructor for restaurants
-        var placeInfo = new google.maps.InfoWindow();
+        placeInfo = new google.maps.InfoWindow();
 
         // add eventListener to show markerRest infowindow
         markerRest.addListener('click', function() {
@@ -69,7 +72,7 @@ var createMarkers = function(places) {
 }
 
 // Create a DOM list with id
-var createList = function(restaurant) {
+const createList = function(restaurant) {
 
     // declare and initialize all const for forEach loop
     const listRestaurant = document.createElement("div");
@@ -87,20 +90,25 @@ var createList = function(restaurant) {
 
     // Add content to display 
     restLink.id = restaurant.place_id;
-    restLink.href = restaurant.place_id;
+    restLink.href = 'detailsRestaurant.html';
     restName.textContent = restaurant.name;
     address.textContent = restaurant.vicinity;
     restReview.textContent = restaurant.rating + ' Stars ' + ' (' + restaurant.user_ratings_total + ')';
 
     // Append content to DOM to display restaurant info
     divRest.appendChild(listRestaurant);
+
+    // Store clicked restaurant details
+    restLink.addEventListener('click', function() {
+        localStorage.setItem('restaurantDetails', restaurant.place_id);
+    }, { passive: false });
 }
 
 // Get place detail to fill infowindow
-var getPlacesDetails = function(marker, infowindow) {
+const getPlacesDetails = function(marker, infowindow) {
 
     // Get detail from each restaurant place id to display on infowindow
-    var service = new google.maps.places.PlacesService(map);
+    service = new google.maps.places.PlacesService(map);
     service.getDetails({
         placeId: marker.id
     }, function(place, status) {
@@ -110,7 +118,7 @@ var getPlacesDetails = function(marker, infowindow) {
             // set marker property in this window so is not repeated
             infowindow.marker = marker;
             // Add html to infowindow with all deatil needed
-            var innerHTML = '<div>';
+            innerHTML = '<div>';
             // Check always if the detail requested exist
             if (place.name) {
                 innerHTML += '<strong>' + place.name + '</strong>';
@@ -140,8 +148,8 @@ var getPlacesDetails = function(marker, infowindow) {
 }
 
 // Function to style markers
-var styleMarker = function(markerColor) {
-    var markerIcon = new google.maps.MarkerImage(
+const styleMarker = function(markerColor) {
+    markerIcon = new google.maps.MarkerImage(
         'http://maps.google.com/mapfiles/kml/paddle/' + markerColor + '-circle.png',
         new google.maps.Size(34, 34),
         new google.maps.Point(0, 0),
@@ -151,12 +159,12 @@ var styleMarker = function(markerColor) {
 }
 
 // clear previous restaurants list results 
-var clearList = function() {
+const clearList = function() {
         while (divRest.firstChild)
             divRest.removeChild(divRest.firstChild);
     }
     // clear previous marker results 
-var clearMarkers = function(markers) {
+const clearMarkers = function(markers) {
     for (var m in markers) {
         markers[m].setMap(null)
     }

@@ -20,25 +20,23 @@
 <body>
 
     <header class>
-        <h3>Check for the Best Restaurants around you....</h3>
+        <h3>Restaurants reviews</h3>
     </header>
 
     <div class='container-fluid'>
         <div class='row'>
-            <div id='map' class='col-sm-8'></div>
-            <div class='col-sm-4' id='showRestaurant'></div>
+            <div id='streetView' class='col-md-6 col-sm-offset-1'></div>
+            <div class='col-md-4' id='infoRestaurant'>
+                <div class='col-md-12' id='restaurantName'>
+                </div>
+            </div>
         </div>
 
     </div>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=MY_API_KEY&libraries=places&v=3&callback=initMap">
+    <script src="https://maps.googleapis.com/maps/api/js?key=MY_API_KEY&libraries=places">
     </script>
-    <script src='js/app.js'></script>
-    <script src='js/infoRestaurant.js'></script>
-    <script src='js/localRestaurants.js'></script>
-    <!-- async lets the browser render the rest of your website while the Maps JavaScript API loads 
-    when API is ready it will call the funct using the callback parameter 
-    if omit async attribute and callback parameter, loading API will block until the API is downloaded -->
+    <script src='js/detailsRestaurant.js'></script>
 
 </body>
 

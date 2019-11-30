@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-select.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src='js/bootstrap.bundle.min.js'></script>
     <script src='js/bootstrap-select.min.js'></script>
@@ -26,7 +27,20 @@
     <div class='container-fluid'>
         <div class='row'>
             <div id='map' class='col-sm-8'></div>
-            <div class='col-sm-4' id='showRestaurant'></div>
+            <div class='col-md-4' id="sortByRating">
+                <div class="sortByRating">
+                    <label>Sort By Rating</label>
+                    <select id="sort">
+                        <option value="all">All</option>
+                        <option value="one">1 Star</option>
+                        <option value="two">2 Star</option>
+                        <option value="three">3 Star</option>
+                        <option value="four">4 Star</option>
+                        <option value="five">5 Star</option>
+                    </select>
+                </div>
+                <div id='showRestaurant'></div>
+            </div>
         </div>
 
     </div>

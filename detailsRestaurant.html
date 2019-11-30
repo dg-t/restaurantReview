@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-select.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src='js/bootstrap.bundle.min.js'></script>
     <script src='js/bootstrap-select.min.js'></script>
@@ -24,7 +25,7 @@
     </header>
 
     <div class='container-fluid'>
-        <div class='row'>
+        <div class='row' id='detailsContainer'>
             <div id='streetView' class='col-md-6 col-sm-offset-1'></div>
             <div class='col-md-4' id='infoRestaurant'>
                 <div class='col-md-12' id='restaurantName'>
@@ -36,6 +37,7 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key=MY_API_KEY&libraries=places">
     </script>
+    <script src='js/infoRestaurant.js'></script>
     <script src='js/detailsRestaurant.js'></script>
 
 </body>

@@ -1,74 +1,160 @@
 // Define variables
-var bounds, place, defaultIconRest, highlightedIconRest, markerRest, placeInfo, service, innerHTML, markerIcon;
+var bounds, place, defaultIconRest, highlightedIconRest, markerRest, placeInfo, service, innerHTML, markerIcon, outOfRange, centerMap;
 
-// Callback function to check status is ok to display restaurants for nearbySearch()
-const callback = function(results, status) {
+// New request depending on map bounds
+const requestBounds = function() {
+    // Make a new request when event is triggered 
+    request = {
+        bounds: map.getBounds(),
+        types: ['restaurant']
+    };
+}
 
-    // If status is OK return markers
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-        markers.push(createMarkers(results));
+// Display restaurants marker and list if map is within zoom range
+const displayRestaurants = function() {
+    if (map.zoom > 12) {
+        // If any infowindow is open, close it
+        if (lastWindow) lastWindow.close();
+        restMarkersAndList();
+
+    } else if (map.zoom <= 12) {
+        outRange();
     }
 }
 
-// Create marker for restaurants
-const createMarkers = function(places) {
-    // Bound map to specific size
-    bounds = new google.maps.LatLngBounds();
+// Display infoWindow error when map zoom is out of range
+const outRange = function() {
+    if (lastWindow) lastWindow.close();
 
-    // Loop for all places found
-    for (i = 0; i < places.length; i++) {
-        place = places[i];
+    outOfRange = new google.maps.InfoWindow;
+    centerMap = map.getCenter();
+    outOfRange.setPosition(centerMap);
+    outOfRange.setContent('Zoom in to search for restaurants');
+    outOfRange.open(map);
+    lastWindow = outOfRange;
 
-        // Style marker on hoover
-        defaultIconRest = styleMarker('red');
-        highlightedIconRest = styleMarker('ylw');
+    // Result dont show when zoom is too far
+    sorting.addEventListener('change', function() {
+        // Clear all results
+        clearMarkers(placeMarkers);
+        clearList();
+    })
+}
 
-        // Create marker constructor for Restaurants
-        markerRest = new google.maps.Marker({
-            map: map,
-            position: place.geometry.location,
-            icon: defaultIconRest,
-            title: place.name,
-            id: place.place_id,
-            animation: google.maps.Animation.DROP
-        });
+// Display marker in nearby search
+const restMarkersAndList = function() {
+    // Initiate new nearby search
+    service.nearbySearch(request, function(results, status) {
+        // Check if status is ok
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
 
-        // extend bounderies of map to keep all markers into the visible map
-        bounds.extend(markerRest.position);
+            // Display all restaurnat
+            for (i = 0; i < results.length; i++) {
+                place = results[i];
+                createRestMarker(place);
+                createList(place);
+            }
 
-        // InfoWindow constructor for restaurants
-        placeInfo = new google.maps.InfoWindow();
-
-        // add eventListener to show markerRest infowindow
-        markerRest.addListener('click', function() {
-
-            // If another infowindow is open, close it before opening a new one
-            if (lastWindow) lastWindow.close();
-            getPlacesDetails(this, placeInfo);
-            lastWindow = placeInfo;
-        });
-
-        // 
-        markerRest.addListener('mouseover', function() {
-            this.setIcon(highlightedIconRest);
-        });
-        markerRest.addListener('mouseout', function() {
-            this.setIcon(defaultIconRest);
-        });
-
-        if (place.geometry.viewport) {
-            //only geocode have viewport
-            bounds.union(place.geometry.viewport);
-        } else {
-            bounds.extend(place.geometry.location);
+            // Sort by rate
+            sortByRate(results);
         }
+    });
+}
 
-        // Create markers and display them as a list
-        placeMarkers.push(markerRest);
-        createList(place);
-    }
-    // map will fit to keep all marker in it
-    map.fitBounds(bounds);
+// Sort restaurants by star rating
+const sortByRate = function(places) {
+    // Sort restaurants by rate
+    sorting.addEventListener('change', function() {
+
+        // Clear results everytime sorting is updated
+        clearMarkers(placeMarkers);
+        clearList();
+
+        for (i = 0; i < places.length; i++) {
+            place = places[i];
+
+            if (sorting.value === 'one') {
+
+                if ((place.rating >= 1 && place.rating < 2) && (markerRest.rate >= 1 && markerRest.rate < 2)) {
+                    createRestMarker(place);
+                    createList(place);
+                }
+            } else if (sorting.value === 'two') {
+
+                if ((place.rating >= 2 && place.rating < 3) && (markerRest.rate >= 2 && markerRest.rate < 3)) {
+                    createRestMarker(place);
+                    createList(place);
+                }
+            } else if (sorting.value === 'three') {
+
+                if (place.rating >= 3 && place.rating < 4) {
+                    createRestMarker(place);
+                    createList(place);
+                }
+
+            } else if (sorting.value === 'four') {
+
+                if ((place.rating >= 4 && place.rating < 5)) {
+                    createRestMarker(place);
+                    createList(place);
+                }
+
+            } else if (sorting.value === 'five') {
+
+                if ((place.rating == 5) && (markerRest.rate == 5)) {
+                    createRestMarker(place);
+                    createList(place);
+                }
+            } else {
+
+                createRestMarker(place);
+                createList(place);
+            }
+
+        }
+    });
+}
+
+// Create and style markers for restaurants
+const createRestMarker = function(store) {
+
+    // Create marker constructor for Restaurants
+    markerRest = new google.maps.Marker({
+        map: map,
+        position: store.geometry.location,
+        icon: defaultIconRest,
+        title: store.name,
+        id: store.place_id,
+        animation: google.maps.Animation.DROP,
+        rate: store.rating
+    });
+
+    // InfoWindow constructor for restaurants
+    placeInfo = new google.maps.InfoWindow();
+
+    // add eventListener to show markerRest infowindow
+    markerRest.addListener('click', function() {
+        // If another infowindow is open, close it before opening a new one
+        if (lastWindow) lastWindow.close();
+        getPlacesDetails(this, placeInfo);
+        lastWindow = placeInfo;
+    });
+
+    // Style restaurants markers
+    defaultIconRest = styleMarker('icon38');
+    highlightedIconRest = styleMarker('icon41');
+
+    markerRest.addListener('mouseover', function() {
+        this.setIcon(highlightedIconRest);
+    });
+    markerRest.addListener('mouseout', function() {
+        this.setIcon(defaultIconRest);
+    });
+
+    // Create restaurants markers and display restaurants list
+    placeMarkers.push(markerRest);
+    //createList(store)
+
 }
 
 // Create a DOM list with id
@@ -93,7 +179,8 @@ const createList = function(restaurant) {
     restLink.href = 'detailsRestaurant.html';
     restName.textContent = restaurant.name;
     address.textContent = restaurant.vicinity;
-    restReview.textContent = restaurant.rating + ' Stars ' + ' (' + restaurant.user_ratings_total + ')';
+    // Add reviews rating as stars
+    starRating(restaurant, restReview);
 
     // Append content to DOM to display restaurant info
     divRest.appendChild(listRestaurant);
@@ -101,7 +188,22 @@ const createList = function(restaurant) {
     // Store clicked restaurant details
     restLink.addEventListener('click', function() {
         localStorage.setItem('restaurantDetails', restaurant.place_id);
-    }, { passive: false });
+    });
+}
+
+// Display stars as rating
+const starRating = function(place, divInfo) {
+
+    // Define maximum rate
+    const stars = 5;
+    // Convert rating into percentage
+    const starPercentage = (place.rating / stars) * 100;
+    // Round to nearest 10 to allow create half stars
+    const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
+    // Add result into DOM
+    divInfo.innerHTML = '<div class="stars-outer"><div class="stars-inner"></div></div>' + ' ' + place.rating;
+    // Fill stars color based on rating %
+    divInfo.querySelector('.stars-inner').style.width = starPercentageRounded;
 }
 
 // Get place detail to fill infowindow
@@ -150,11 +252,11 @@ const getPlacesDetails = function(marker, infowindow) {
 // Function to style markers
 const styleMarker = function(markerColor) {
     markerIcon = new google.maps.MarkerImage(
-        'http://maps.google.com/mapfiles/kml/paddle/' + markerColor + '-circle.png',
-        new google.maps.Size(34, 34),
+        'http://maps.google.com/mapfiles/kml/pal2/' + markerColor + '.png',
+        new google.maps.Size(30, 30),
         new google.maps.Point(0, 0),
         new google.maps.Point(0, 32),
-        new google.maps.Size(34, 34));
+        new google.maps.Size(30, 30));
     return markerIcon;
 }
 

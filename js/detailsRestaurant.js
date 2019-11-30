@@ -1,5 +1,6 @@
 const getDetailsRest = async function() {
     // target div where to display information
+    var pageResult = document.getElementById('detailsContainer');
     var restaurantName = document.getElementById('restaurantName');
     var infoDiv = document.getElementById('infoRestaurant');
     var pano = document.getElementById('streetView');
@@ -15,7 +16,7 @@ const getDetailsRest = async function() {
     const result = await response.json();
 
     // if there is any response run code
-    if (result) {
+    if (result.status === 'OK') {
 
         // Variables
         var panorama;
@@ -34,8 +35,8 @@ const getDetailsRest = async function() {
         const lineBreak = document.createElement("hr");
 
         restName.id = 'nameRest';
-        restName.textContent = restaurant.name;
-        totalRate.innerHTML = '<b>Total Rating:</b> ' + restaurant.rating + '<b> Total Reviews:</b> ' + restaurant.user_ratings_total;
+        if (restaurant.name) { restName.textContent = restaurant.name; } else { restaurant.name.textContent = 'No name is available'; }
+        if (restaurant.rating) { totalRate.innerHTML = '<b>Total Rating:</b> ' + restaurant.rating + '<b> Total Reviews:</b> ' + restaurant.user_ratings_total; } else { restaurant.rating.textContent = 'No rating is available'; }
         allReview.innerHTML = '<b> All reviews: </b>';
 
         restaurantName.appendChild(restName);
@@ -43,40 +44,52 @@ const getDetailsRest = async function() {
         restaurantName.appendChild(allReview);
         restaurantName.appendChild(lineBreak);
 
-        // Display reviews
-        for (r = 0; r < restaurant.reviews.length; r++) {
-            showReviews = restaurant.reviews[r];
-            const reviews = document.createElement("div");
-            const reviewAuthor = document.createElement("p");
-            const rate = document.createElement("p");
-            const reviewText = document.createElement("p");
-            const lineBreak = document.createElement("hr");
+        if (restaurant.reviews) {
+            // Display reviews
+            for (r = 0; r < restaurant.reviews.length; r++) {
+                showReviews = restaurant.reviews[r];
+                const reviews = document.createElement("div");
+                const reviewAuthor = document.createElement("p");
+                const rate = document.createElement("p");
+                const reviewText = document.createElement("p");
+                const lineBreak = document.createElement("hr");
 
-            // Create a div for each review
-            reviews.appendChild(reviewAuthor);
-            reviews.appendChild(rate);
-            reviews.appendChild(reviewText);
-            reviews.appendChild(lineBreak);
+                // Create a div for each review
+                reviews.appendChild(reviewAuthor);
+                reviews.appendChild(rate);
+                reviews.appendChild(reviewText);
+                reviews.appendChild(lineBreak);
 
-            // Add content to display 
-            reviewAuthor.innerHTML = '<img src="' + restaurant.reviews[r].profile_photo_url + '" height="42" width="42" alt= "Author image"> <strong>' + restaurant.reviews[r].author_name + '</strong>';
-            rate.innerHTML = '<b>' + restaurant.reviews[r].rating + '</b>';
-            reviewText.textContent = restaurant.reviews[r].text;
+                // Add content to display 
+                reviewAuthor.innerHTML = '<img src="' + restaurant.reviews[r].profile_photo_url + '" height="42" width="42" alt= "Author image"> <strong>' + restaurant.reviews[r].author_name + '</strong>';
+                reviewText.textContent = restaurant.reviews[r].text;
+                // Add reviews rating as stars
+                starRating(restaurant.reviews[r], rate);
 
-            // Append content to DOM to display restaurant info
-            infoDiv.appendChild(reviews);
+                // Append content to DOM to display restaurant info
+                infoDiv.appendChild(reviews);
+            }
+        } else {
+            restaurant.reviews.textContent = 'No reviews yet';
         }
 
-        // Show dynamic street view
-        panorama = new google.maps.StreetViewPanorama(
-            pano, {
-                position: restaurantLocation,
-                pov: {
-                    heading: 45,
-                    pitch: 5
-                }
-            });
+        // Display street view panorama if available
+        if (google.maps.StreetViewStatus.OK) {
+            // Show dynamic street view
+            panorama = new google.maps.StreetViewPanorama(
+                pano, {
+                    position: restaurantLocation,
+                    pov: {
+                        heading: 45,
+                        pitch: 5
+                    }
+                });
+        } else {
+            panorama = 'No street View Panorama available';
+        }
         map.setStreetView(panorama);
+    } else {
+        pageResult.textContent = 'No results for this search';
     }
 }
 getDetailsRest();

@@ -4,19 +4,63 @@ const getDetailsRest = async function() {
     var restaurantName = document.getElementById('restaurantName');
     var infoDiv = document.getElementById('infoRestaurant');
     var pano = document.getElementById('streetView');
-
-
+    var restaurant, restaurantLocation, panorama, newPlace, detailRest, newMarker, newRestPos;
 
     // Retrive restaurant stored details
     detailRest = localStorage.getItem('restaurantDetails');
+    newPlace = JSON.parse(sessionStorage.getItem('newPlace'));
+    newMarker = sessionStorage.getItem('newMarker');
 
     // fetch data sending request to a proxy, await response, and save it in a variable
-    const url = 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id=' + detailRest + '&key=AIzaSyB_nN8ldrp5JR-5NIYVQKS9shRVPoe43KI';
+    const url = 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id=' + detailRest + '&key=MY_API_KEY';
     const response = await fetch(url);
     const result = await response.json();
 
-    // if there is any response run code
-    if (result.status === 'OK') {
+    // Display new restaurant details
+    if (result.status == "INVALID_REQUEST") {
+
+        for (p = 0; p < newPlace.length; p++) {
+            if (newPlace[p].placeId == newMarker) {
+
+                const newRestName = document.createElement('h3');
+                const allReview = document.createElement('p');
+                const totalRate = document.createElement('p');
+                const lineBreak = document.createElement("hr");
+
+                newRestName.id = 'nameRest';
+                newRestName.textContent = newPlace[p].name;
+
+                totalRate.innerHTML = '<b>Total Rating:</b> ' + newPlace[p].rating + '<b> Total Reviews:</b> '; // + newPlace.reviews.length
+                allReview.innerHTML = '<b> All reviews: </b>';
+
+                restaurantName.appendChild(newRestName);
+                restaurantName.appendChild(totalRate);
+                restaurantName.appendChild(allReview);
+                restaurantName.appendChild(lineBreak);
+
+                newRestPos = newPlace[p].position;
+
+                map = new google.maps.Map(pano, {
+                    center: newRestPos,
+                    zoom: 14
+                });
+
+                // Show dynamic street view
+                panorama = new google.maps.StreetViewPanorama(
+                    pano, {
+                        position: newRestPos,
+                        pov: {
+                            heading: 45,
+                            pitch: 5
+                        }
+                    });
+                map.setStreetView(panorama);
+            }
+        }
+    }
+
+    // Display real restaurant details
+    else if (result.status === 'OK') {
 
         // Variables
         var panorama;

@@ -8,6 +8,12 @@ var divRest = document.getElementById('showRestaurant');
 var sorting = document.getElementById('sort');
 var placeMarkers = [];
 
+// Variables for new restaurant
+var newMarkerRest = [];
+var restaurantIsNew = true;
+var formInfoWindow, newInfoRestaurant, latlng;
+var newRestId = -1;
+
 // Map function
 var initMap = function() {
 
@@ -16,6 +22,12 @@ var initMap = function() {
 
     // Create infoWindow for geolocation error handling
     infoLocationError = new google.maps.InfoWindow;
+    // create infoWindow for form add new restaurant
+    formInfoWindow = new google.maps.InfoWindow({
+        content: form
+    });
+    // New restaurant infoWindow
+    newInfoRestaurant = new google.maps.InfoWindow;
 
     // Get user geolocation
     if (navigator.geolocation) {
@@ -82,6 +94,42 @@ var initMap = function() {
                     infoCurrentPos.open(map, markerUserPos);
                     infoCurrentPos.setContent('Your position');
                     lastWindow = infoCurrentPos;
+                });
+
+                // Create new restaurant marker
+                map.addListener('rightclick', function(e) {
+
+                    formInfoWindow.close(map, newMarkerRest);
+                    restaurantIsNew = true;
+
+                    if (lastWindow) lastWindow.close();
+                    latlng = new google.maps.LatLng(e.latLng.lat(), e.latLng.lng());
+                    // Create marker constructor for Restaurants
+                    newMarkerRest = new google.maps.Marker({
+                        map: map,
+                        position: latlng,
+                        icon: defaultIconRest,
+                        id: newRestId + 1,
+                        animation: google.maps.Animation.DROP
+                    });
+
+                    // Style restaurants markers
+                    defaultIconRest = styleMarker('icon38');
+                    highlightedIconRest = styleMarker('icon41');
+
+                    newMarkerRest.addListener('mouseover', function() {
+                        this.setIcon(highlightedIconRest);
+                    });
+                    newMarkerRest.addListener('mouseout', function() {
+                        this.setIcon(defaultIconRest);
+                    });
+
+                    // Add new restaurant marker in markers array
+                    placeMarkers.push(newMarkerRest);
+
+                    // On click open infoWindow
+                    newMarkerRest.addListener('click', displayNewRestInfo);
+                    if (lastWindow) lastWindow.close();
                 });
             },
             function() {

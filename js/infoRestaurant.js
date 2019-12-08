@@ -7,6 +7,8 @@ var newRestaurants = [];
 var newPlace = [];
 var form = document.createElement('form');
 
+var totalRating = 0;
+
 // New request depending on map bounds
 const requestBounds = function() {
     // Make a new request when event is triggered 
@@ -128,7 +130,7 @@ const createRestMarker = function(store) {
     markerRest = new google.maps.Marker({
         map: map,
         position: store.geometry.location,
-        icon: defaultIconRest,
+        icon: 'http://maps.google.com/mapfiles/kml/pal2/icon38.png',
         title: store.name,
         id: store.place_id,
         animation: google.maps.Animation.DROP,
@@ -339,14 +341,7 @@ function createFormInfoWindow(newMarkerRest) {
     <input type="text" name="restAddress" id="restAddress" placeholder="Restaurant Address" required/><br>
     <input type="hidden" id="restLat" name="restLat" value="${newMarkerRest.position.lat()}"/>
     <input type="hidden" id="restLng" name="restLng" value="${newMarkerRest.position.lng()}"/>
-    <label for="restRate" class="labelRest">Rating: </label>
-    <select name="restRate" id="restRate" required>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-    </select><br>
+    <br>
     <button type="submit" id="addRestaurant" class="btn addRestaurant">Create Restaurant</button>`;
 
     newInfoRestaurant.setContent(form);
@@ -356,7 +351,6 @@ form.addEventListener("submit", function(e) {
     e.preventDefault();
     var name = document.getElementById('restName');
     var address = document.getElementById('restAddress');
-    var rating = document.getElementById('restRate');
     var newRestLat = document.getElementById('restLat');
     var newRestLng = document.getElementById('restLng');
     var position = new google.maps.LatLng(newRestLat.value, newRestLng.value);
@@ -365,7 +359,7 @@ form.addEventListener("submit", function(e) {
         placeId: newMarkerRest.id,
         name: name.value,
         vicinity: address.value,
-        rating: rating.value,
+        rating: totalRating,
         position: position,
         icon: '../img/restaurant.jpg',
         reviews: ''
@@ -394,10 +388,8 @@ function newRestInfoWindow(newMarkerRest, newInfoRestaurant) {
 
             // declare and initialize all elements for infoWindow
             const newInfoDiv = document.createElement("div");
-            const infoRateDiv = document.createElement("div");
             const newInfoName = document.createElement("h6");
             const newInfoAddress = document.createElement("p");
-            const infoRate = document.createElement("p");
             const infoImage = document.createElement("img");
             const newInfoLink = document.createElement("a");
 
@@ -409,11 +401,6 @@ function newRestInfoWindow(newMarkerRest, newInfoRestaurant) {
             if (place[p].vicinity) {
                 newInfoAddress.textContent = place[p].vicinity;
                 newInfoDiv.appendChild(newInfoAddress);
-            }
-            if (place[p].rating) {
-                infoRate.textContent = starRating(place[p], infoRateDiv);
-                infoRateDiv.appendChild(infoRate);
-                newInfoDiv.appendChild(infoRateDiv);
             }
             if (place[p].icon) {
                 infoImage.src = place[p].icon;

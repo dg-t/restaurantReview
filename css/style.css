@@ -160,7 +160,7 @@ input[type=text]:focus {
 }
 
 
-/*  NEW RESTAURANT INFOWINDOW*/
+/*  NEW RESTAURANT INFOWINDOW */
 
 .newInfoDiv {
     min-width: 200px;
@@ -171,4 +171,58 @@ input[type=text]:focus {
     margin-bottom: 10px;
     height: 100px;
     width: 100px;
+}
+
+
+/* NEW REVIEW FORM */
+
+.modal {
+    text-align: center;
+}
+
+.modal-body {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6)), url('../img/rate-form.jpg');
+}
+
+#addReviewButton {
+    margin: 30px;
+}
+
+.feedbackArea {
+    display: block;
+}
+
+textarea:focus,
+select:focus {
+    outline: 2px solid rgb(255, 136, 0);
+}
+
+.formReview {
+    margin: 10px;
+    width: 35%;
+}
+
+#authorName {
+    margin: 15px;
+    width: 35%;
+    padding: 2px;
+}
+
+#authorRating {
+    margin: 15px;
+    width: 35%;
+}
+
+#authorReview {
+    width: 100%;
+    min-height: 100px;
+    opacity: 0.8;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 3px;
+    text-indent: 5px;
 }

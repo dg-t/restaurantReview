@@ -1,10 +1,16 @@
+// target div where to display information
+var pageResult = document.getElementById('detailsContainer');
+var restaurantName = document.getElementById('restaurantName');
+var infoDiv = document.getElementById('infoRestaurant');
+var pano = document.getElementById('streetView');
+var formReview = document.getElementById("formReview")
+var restaurant, restaurantLocation, panorama, newPlace, detailRest, newMarker, newRestPos;
+
+var initialRate = 0;
+var newReviewArray = [];
+var newRateReview, newName, newRating, newReview, newReviewDetails;
+
 const getDetailsRest = async function() {
-    // target div where to display information
-    var pageResult = document.getElementById('detailsContainer');
-    var restaurantName = document.getElementById('restaurantName');
-    var infoDiv = document.getElementById('infoRestaurant');
-    var pano = document.getElementById('streetView');
-    var restaurant, restaurantLocation, panorama, newPlace, detailRest, newMarker, newRestPos;
 
     // Retrive restaurant stored details
     detailRest = localStorage.getItem('restaurantDetails');
@@ -23,20 +29,51 @@ const getDetailsRest = async function() {
             if (newPlace[p].placeId == newMarker) {
 
                 const newRestName = document.createElement('h3');
-                const allReview = document.createElement('p');
                 const totalRate = document.createElement('p');
+                const allReview = document.createElement('p');
+                const addReviewButton = document.createElement('button');
                 const lineBreak = document.createElement("hr");
 
                 newRestName.id = 'nameRest';
                 newRestName.textContent = newPlace[p].name;
+                addReviewButton.id = 'addReviewButton';
+                addReviewButton.setAttribute("data-toggle", "modal");
+                addReviewButton.setAttribute("data-target", "#modalReview");
 
-                totalRate.innerHTML = '<b>Total Rating:</b> ' + newPlace[p].rating + '<b> Total Reviews:</b> '; // + newPlace.reviews.length
+                totalRate.innerHTML = '<b>Total Rating:</b> ' + totalRating + '<b> Total Reviews:</b> ' + newPlace[p].reviews.length; // + newPlace.reviews.length
                 allReview.innerHTML = '<b> All reviews: </b>';
+                addReviewButton.textContent = 'Add review';
+                allReview.appendChild(addReviewButton);
 
                 restaurantName.appendChild(newRestName);
                 restaurantName.appendChild(totalRate);
                 restaurantName.appendChild(allReview);
                 restaurantName.appendChild(lineBreak);
+
+                // Display reviews
+                for (r = 0; r <= newPlace[p].reviews.length; r++) {
+
+                    const reviews = document.createElement("div");
+                    const reviewAuthor = document.createElement("p");
+                    const rate = document.createElement("p");
+                    const reviewText = document.createElement("p");
+
+                    // Create a div for each review
+                    reviews.appendChild(reviewAuthor);
+                    reviews.appendChild(rate);
+                    reviews.appendChild(reviewText);
+                    if (newPlace[p].reviews.length > 0) { starRating(newPlace.reviews[r], rate) }
+
+                    infoDiv.appendChild(reviews);
+
+                    formReview.addEventListener("submit", function(e) {
+                        e.preventDefault();
+                        submitReview();
+
+                        totalRating = Math.round(newRateReview / (newReviewArray.length) * 10) / 10;
+                        totalRate.innerHTML = '<b>Total Rating:</b> ' + totalRating + '<b> Total Reviews:</b> ' + newReviewArray.length;
+                    });
+                }
 
                 newRestPos = newPlace[p].position;
 
@@ -63,9 +100,9 @@ const getDetailsRest = async function() {
     else if (result.status === 'OK') {
 
         // Variables
-        var panorama;
-        var restaurant = result.result;
-        var restaurantLocation = restaurant.geometry.location;
+        panorama;
+        restaurant = result.result;
+        restaurantLocation = restaurant.geometry.location;
         // Define map
         map = new google.maps.Map(pano, {
             center: restaurantLocation,
@@ -74,14 +111,21 @@ const getDetailsRest = async function() {
 
         // Display Restaurant name in DOM
         const restName = document.createElement('h3');
-        const allReview = document.createElement('p');
         const totalRate = document.createElement('p');
+        const allReview = document.createElement('p');
+        const addReviewButton = document.createElement('button');
         const lineBreak = document.createElement("hr");
 
         restName.id = 'nameRest';
+        addReviewButton.id = 'addReviewButton';
+        addReviewButton.setAttribute("data-toggle", "modal");
+        addReviewButton.setAttribute("data-target", "#modalReview");
+
         if (restaurant.name) { restName.textContent = restaurant.name; } else { restaurant.name.textContent = 'No name is available'; }
-        if (restaurant.rating) { totalRate.innerHTML = '<b>Total Rating:</b> ' + restaurant.rating + '<b> Total Reviews:</b> ' + restaurant.user_ratings_total; } else { restaurant.rating.textContent = 'No rating is available'; }
+        if (restaurant.rating) { totalRate.innerHTML = '<b>Total Rating:</b> ' + restaurant.rating + '<b> Total Reviews:</b> ' + restaurant.user_ratings_total; } else { restaurant.rating.textContent = 'No rating available'; }
         allReview.innerHTML = '<b> All reviews: </b>';
+        addReviewButton.textContent = 'Add review';
+        allReview.appendChild(addReviewButton);
 
         restaurantName.appendChild(restName);
         restaurantName.appendChild(totalRate);
@@ -112,7 +156,17 @@ const getDetailsRest = async function() {
 
                 // Append content to DOM to display restaurant info
                 infoDiv.appendChild(reviews);
+
+                initialRate += parseInt(restaurant.reviews[r].rating);
             }
+
+            formReview.addEventListener("submit", function(e) {
+                e.preventDefault();
+                submitReview();
+                restaurant.user_ratings_total += 1;
+                restaurant.rating = Math.round(((initialRate + newRateReview) / (5 + newReviewArray.length)) * 10) / 10;
+                totalRate.innerHTML = '<b>Total Rating:</b> ' + restaurant.rating + '<b> Total Reviews:</b> ' + restaurant.user_ratings_total;
+            });
         } else {
             restaurant.reviews.textContent = 'No reviews yet';
         }
@@ -136,4 +190,59 @@ const getDetailsRest = async function() {
         pageResult.textContent = 'No results for this search';
     }
 }
+
+// 
+function submitReview() {
+
+    newRateReview = 0;
+    newName = document.getElementById("authorName");
+    newRating = document.getElementById("authorRating");
+    newReview = document.getElementById("authorReview");
+    if (!(newName.value && newRating.value && newReview.value)) {
+        return;
+    }
+    createReview(newName.value, newRating.value, newReview.value);
+    //reset form values
+    newName.value = "";
+    newRating.value = "";
+    newReview.value = "";
+
+    for (n = 0; n < newReviewArray.length; n++) {
+        newRateReview += parseInt(newReviewArray[n].rating);
+    }
+
+    $('#modalReview').modal('toggle');
+}
+
+function createReview(newName, newRating, newReview) { //add to array and to the page
+    newReviewDetails = {
+        name: newName,
+        rating: newRating,
+        review: newReview,
+    };
+
+    // Append content to DOM to display restaurant info
+    const addReview = document.getElementById('restaurantName');
+    const yourReview = document.createElement("div");
+    const reviewAuthor = document.createElement("p");
+    const rate = document.createElement("p");
+    const reviewText = document.createElement("p");
+    const lineBreak = document.createElement("hr");
+
+    // Add content to display 
+    reviewAuthor.innerHTML = '<img src="../img/user.png" height="42" width="42" alt= "Author image"> <strong>' + newReviewDetails.name + '</strong>';
+    reviewText.textContent = newReviewDetails.review;
+    // Add reviews rating as stars
+    starRating(newReviewDetails, rate);
+
+    // Create a div for each review
+    yourReview.appendChild(reviewAuthor);
+    yourReview.appendChild(rate);
+    yourReview.appendChild(reviewText);
+    yourReview.appendChild(lineBreak);
+
+    newReviewArray.push(newReviewDetails);
+    addReview.appendChild(yourReview);
+}
+
 getDetailsRest();

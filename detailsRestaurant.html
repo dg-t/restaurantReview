@@ -33,6 +33,45 @@
             </div>
         </div>
 
+
+        <!-- Modal  add reviews -->
+        <div class="modal fade" id="modalReview">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title col-12 modal-title text-center">What do you think about this place?</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form id="formReview">
+
+                            <input type="text" name="authorName" id="authorName" placeholder="Your Name" required>
+
+                            <select name="authorRating" id="authorRating" required>
+                                    <option value="" selected>your rating:</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+
+                            <div>
+                                <textarea name="authorReview" id="authorReview" placeholder="Your feedback" required></textarea>
+                            </div>
+                            <button type="submit" class="button">Add Review</button>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=MY_API_KEY&libraries=places">

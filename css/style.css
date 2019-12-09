@@ -4,19 +4,20 @@
 /* HEADER */
 
 header {
-    padding: 20px;
+    padding: 40px;
+    font-family: 'Acme', sans-serif;
 }
 
 
 /* MAP */
 
 #map {
-    height: 600px;
+    height: 680px;
     width: 100%;
 }
 
 #showRestaurant {
-    height: 600px;
+    height: 620px;
     overflow: auto;
 }
 
@@ -69,7 +70,8 @@ header {
 }
 
 .sortByRating {
-    margin-bottom: 20px;
+    padding: 10px;
+    background-color: rgb(255, 136, 0);
 }
 
 

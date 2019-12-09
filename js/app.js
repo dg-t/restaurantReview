@@ -1,18 +1,33 @@
-// MAP
+// GLOBAL VARIABLES
 
-// Variables
+// Variables map and markers
 var map, pos, markerUserPos, infoLocationError, service, userPos, request;
+var bounds, place, defaultIconRest, highlightedIconRest, markerRest, placeInfo, service, innerHTML, markerIcon, outOfRange, centerMap;
 var lastWindow = null;
 var markers = [];
 var divRest = document.getElementById('showRestaurant');
 var sorting = document.getElementById('sort');
 var placeMarkers = [];
 
-// Variables for new restaurant
+// Variables for add new restaurant
+var form = document.createElement('form');
+var formInfoWindow, newInfoRestaurant, latlng, newMarker;
 var newMarkerRest = [];
-var restaurantIsNew = true;
-var formInfoWindow, newInfoRestaurant, latlng;
+var newRestaurants = [];
+var newPlace = [];
 var newRestId = -1;
+var totalRating = 0;
+var restaurantIsNew = true;
+
+// Variables for second html page
+var pageResult = document.getElementById('detailsContainer');
+var restaurantName = document.getElementById('restaurantName');
+var infoDiv = document.getElementById('infoRestaurant');
+var pano = document.getElementById('streetView');
+var formReview = document.getElementById("formReview");
+var initialRate = 0;
+var newReviewArray = [];
+var restaurant, restaurantLocation, panorama, newPlace, detailRest, newMarker, newRestPos, newRateReview, newName, newRating, newReview, newReviewDetails;
 
 // Map function
 var initMap = function() {

@@ -20,8 +20,8 @@
 
 <body>
 
-    <header class>
-        <h3>Check for the Best Restaurants around you....</h3>
+    <header class='text-center'>
+        <h2>Check for the Best Restaurants around you....</h2>
     </header>
 
     <div class='container-fluid'>
@@ -31,7 +31,7 @@
                 <div class="sortByRating">
                     <label>Sort By Rating</label>
                     <select id="sort">
-                        <option value="all">All</option>
+                        <option value="all">Search all..</option>
                         <option value="one">1 Star</option>
                         <option value="two">2 Star</option>
                         <option value="three">3 Star</option>
@@ -48,7 +48,10 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=MY_API_KEY&libraries=places&v=3&callback=initMap">
     </script>
     <script src='js/app.js'></script>
-    <script src='js/infoRestaurant.js'></script>
+    <script src='js/displayRestaurant.js'></script>
+    <script src='js/markerAndList.js'></script>
+    <script src='js/rate.js'></script>
+    <script src='js/addNewRestaurant.js'></script>
     <script src='js/localRestaurants.js'></script>
     <!-- async lets the browser render the rest of your website while the Maps JavaScript API loads 
     when API is ready it will call the funct using the callback parameter 

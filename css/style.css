@@ -10,7 +10,7 @@ body {
 header {
     padding: 40px;
     font-family: 'Acme', sans-serif;
-    background-image: linear-gradient(rgb(255, 255, 255), rgb(0, 0, 0));
+    background-image: linear-gradient(to right, rgb(52, 58, 64), rgba(52, 58, 64, 0.658));
 }
 
 .pageTitle {
@@ -25,7 +25,7 @@ header {
     content: attr(data-text);
     color: rgb(255, 136, 0);
     overflow: hidden;
-    animation: type 20s steps(45);
+    animation: type 15s steps(45);
     white-space: nowrap;
     position: absolute;
     left: 12%;
@@ -37,7 +37,7 @@ header {
     position: absolute;
     text-align: center;
     left: 12%;
-    top: 7%;
+    top: 20%;
 }
 
 .pageTwoTitle:before {
@@ -48,7 +48,7 @@ header {
     white-space: nowrap;
     position: absolute;
     left: 12%;
-    top: 7%;
+    top: 20%;
 }
 
 @keyframes type {
@@ -127,7 +127,7 @@ header {
 }
 
 #restaurantName {
-    background-color: rgb(255, 136, 0);
+    background-image: linear-gradient(to left, rgb(255, 123, 0, 0.8), rgb(255, 230, 0, 0.8), rgb(255, 123, 0, 0.8));
     padding: 10px;
     text-align: center;
 }
@@ -359,7 +359,7 @@ select {
     background-size: 200%;
     margin-left: 30px;
     border-radius: 5px;
-    background-image: linear-gradient(to left, rgb(255, 123, 0), rgb(255, 230, 0), rgb(255, 123, 0));
+    background-image: linear-gradient(to left, rgb(18, 203, 196, 0.6), rgb(6, 82, 221, 0.6), rgb(18, 203, 196, 0.6));
     transition: 0.6s;
 }
 
@@ -386,4 +386,101 @@ select {
 
 .footerLink:hover {
     color: rgb(248, 206, 11);
+}
+
+.shortText {
+    display: none;
+}
+
+
+/* improve responsiveness for ipad */
+
+@media only screen and (max-width: 770px) {
+    .pageTitle {
+        font-size: 35px;
+        left: 5%;
+        top: 20%;
+    }
+    .pageTitle:before {
+        left: 5%;
+        top: 20%;
+    }
+    .pageTwoTitle {
+        left: 5%;
+        top: 20%;
+    }
+    .pageTwoTitle:before {
+        left: 5%;
+        top: 20%;
+    }
+}
+
+
+/* improve responsiveness for mobiles large screen */
+
+@media only screen and (max-width: 640px) {
+    .pageTitle {
+        display: none;
+    }
+    .shortText {
+        display: inline-block;
+        font-size: 30px;
+        color: transparent;
+        position: absolute;
+        left: 5%;
+        top: 20%;
+    }
+    .shortText:before {
+        content: attr(data-text);
+        color: rgb(255, 136, 0);
+        overflow: hidden;
+        animation: type 10s steps(24);
+        white-space: nowrap;
+        position: absolute;
+        left: 5%;
+        top: 20%;
+    }
+    .pageTwoTitle {
+        left: 5%;
+        top: 15%;
+    }
+    .pageTwoTitle:before {
+        left: 5%;
+        top: 15%;
+    }
+}
+
+
+/* improve responsiveness for mobiles small screen */
+
+@media only screen and (max-width: 480px) {
+    .pageTitle {
+        display: none;
+    }
+    .shortText {
+        display: inline-block;
+        font-size: 25px;
+        color: transparent;
+        position: absolute;
+        left: 5%;
+        top: 20%;
+    }
+    .shortText:before {
+        content: attr(data-text);
+        color: rgb(255, 136, 0);
+        overflow: hidden;
+        animation: type 10s steps(24);
+        white-space: nowrap;
+        position: absolute;
+        left: 5%;
+        top: 20%;
+    }
+    .pageTwoTitle {
+        left: 5%;
+        top: 15%;
+    }
+    .pageTwoTitle:before {
+        left: 5%;
+        top: 15%;
+    }
 }

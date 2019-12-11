@@ -13,6 +13,7 @@ const displayRestaurants = function() {
         // If any infowindow is open, close it
         if (lastWindow) lastWindow.close();
         restMarkersAndList();
+        // getRestaurants();
 
     } else if (map.zoom <= 12) {
         outRange();

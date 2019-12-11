@@ -73,7 +73,6 @@ const newRestInfoWindow = function(newMarkerRest, newInfoRestaurant) {
             const divLink = document.createElement("div");
             const divImg = document.createElement("div");
             const infoName = document.createElement("h6");
-            const infoAddress = document.createElement("p");
             const infoImage = document.createElement("img");
             const infoLink = document.createElement("a");
 
@@ -91,12 +90,6 @@ const newRestInfoWindow = function(newMarkerRest, newInfoRestaurant) {
                 infoPlace.appendChild(infoName);
                 infoDiv.appendChild(infoPlace);
             }
-            /*
-            if (place[p].vicinity) {
-                infoAddress.textContent = place[p].vicinity;
-                infoDiv.appendChild(infoAddress);
-            }
-            */
 
 
             // Add link to see restaurant details

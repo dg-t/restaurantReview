@@ -2,7 +2,7 @@
 
 // Variables map and markers
 var map, pos, markerUserPos, infoLocationError, service, userPos, request;
-var bounds, place, defaultIconRest, highlightedIconRest, markerRest, placeInfo, service, innerHTML, markerIcon, outOfRange, centerMap;
+var bounds, place, defaultIconRest, highlightedIconRest, markerRest, placeInfo, service, innerHTML, markerIcon, outOfRange, centerMap, checkRate;
 var lastWindow = null;
 var markers = [];
 var divRest = document.getElementById('showRestaurant');
@@ -85,13 +85,14 @@ var initMap = function() {
 
                 // Add eventListener to dispaly results depending on change bounds
                 map.addListener('dragend', function(event) {
-                    // Clear previous markers and list ///////////////////////
+                    // Clear previous markers and list 
                     clearMarkers(placeMarkers);
                     clearList();
                     // Display results
                     sorting.value = 'Search all..';
                     requestBounds();
                     displayRestaurants();
+                    // getRestaurants();
                 });
 
                 // Add eventListener to dispaly results depending on zoom
@@ -103,6 +104,7 @@ var initMap = function() {
                     sorting.value = 'Search all..';
                     requestBounds();
                     displayRestaurants();
+                    // getRestaurants();
                 });
 
                 // EventListener to show user infoWindow

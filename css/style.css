@@ -1,11 +1,63 @@
 /* GENERAL */
 
+body {
+    font-family: 'Nunito', sans-serif;
+}
+
 
 /* HEADER */
 
 header {
     padding: 40px;
     font-family: 'Acme', sans-serif;
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(0, 0, 0));
+}
+
+.pageTitle {
+    color: transparent;
+    position: absolute;
+    text-align: center;
+    left: 12%;
+    top: 20%;
+}
+
+.pageTitle:before {
+    content: attr(data-text);
+    color: rgb(255, 136, 0);
+    overflow: hidden;
+    animation: type 20s steps(45);
+    white-space: nowrap;
+    position: absolute;
+    left: 12%;
+    top: 20%;
+}
+
+.pageTwoTitle {
+    color: transparent;
+    position: absolute;
+    text-align: center;
+    left: 12%;
+    top: 7%;
+}
+
+.pageTwoTitle:before {
+    content: attr(data-text);
+    color: rgb(255, 136, 0);
+    overflow: hidden;
+    animation: type 8s steps(18);
+    white-space: nowrap;
+    position: absolute;
+    left: 12%;
+    top: 7%;
+}
+
+@keyframes type {
+    0% {
+        width: 0;
+    }
+    50% {
+        width: 100%;
+    }
 }
 
 
@@ -17,29 +69,94 @@ header {
 }
 
 #showRestaurant {
-    height: 620px;
+    height: 624px;
     overflow: auto;
+}
+
+
+/* FIRST PAGE STYLE */
+
+.restaurantList {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6)), url('../img/assortedFood.jpg');
+    padding-top: 10px;
+}
+
+#sortByRating {
+    padding: 0;
+    height: 80px;
+    text-align: center;
+}
+
+.sortByRating {
+    color: black;
+    background-size: 200%;
+    background-image: linear-gradient(to left, rgb(255, 123, 0), rgb(255, 230, 0), rgb(255, 123, 0));
+    transition: 0.6s;
+}
+
+.sortByRating:hover {
+    background-position: right;
+}
+
+#sort {
+    width: 100px;
+    margin-left: 20px;
+    border-radius: 5px;
+}
+
+.labelSort {
+    text-shadow: 2px 2px 4px rgb(0, 0, 0, 0.3);
+    margin-top: 15px;
+    padding: 5px;
+}
+
+.restaurantLinks {
+    color: black;
+}
+
+.restaurantLinks:hover {
+    color: rgb(255, 136, 0);
 }
 
 
 /* SECOND PAGE STYLE */
 
+#displayReviewInfo {
+    padding: 0;
+    margin: 0;
+}
+
+#restaurantName {
+    background-color: rgb(255, 136, 0);
+    padding: 10px;
+    text-align: center;
+}
+
 #nameRest {
     color: red;
-    text-align: center;
-    padding: 10px;
+    text-shadow: 2px 2px 4px rgb(0, 0, 0, 0.3);
 }
 
 #streetView {
-    height: 500px;
-    width: 80%;
-    padding: 20px;
-    margin: 0 5%;
+    height: 680px;
+    width: 100%;
 }
 
 #infoRestaurant {
-    height: 500px;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6)), url('../img/rate-info.png');
+    height: 533px;
     overflow: auto;
+    padding: 10px;
+}
+
+.displayReview {
+    padding-left: 10px;
+    padding-right: 15px;
+    padding-top: 0;
+}
+
+#noReview {
+    display: none;
 }
 
 
@@ -66,42 +183,59 @@ header {
 
 .stars-inner::before {
     content: "\f005 \f005 \f005 \f005 \f005";
-    color: #f8ce0b;
-}
-
-.sortByRating {
-    padding: 10px;
-    background-color: rgb(255, 136, 0);
+    color: rgb(248, 206, 11);
 }
 
 
-/* INFOWINDOW STYLE */
+/* INFOWINDOW STYLE   linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);*/
+
+.gm-style .gm-style-iw-d {
+    overflow: hidden !important;
+}
+
+.gm-style .gm-style-iw-c {
+    padding: 0;
+}
 
 .infoDiv {
-    overflow: auto;
-}
-
-.infoName {
+    background-image: linear-gradient(141deg, rgb(159, 184, 173, 0.4) 0%, rgb(31, 200, 219, 0.4) 51%, rgb(44, 181, 232, 0.4) 75%);
+    display: flex;
+    align-items: center;
     text-align: center;
+    max-width: 300px;
+    height: 70px;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
 }
 
 .infoImage {
-    margin-bottom: 10px;
+    margin: 0;
+    max-height: 50px;
+    max-width: 100px;
 }
 
-.infoLink {
-    text-decoration: underline;
-    padding: 5px;
-    margin-left: 5%;
-    font-size: 14px;
-    font-weight: bold;
-    color: gray;
+.infoName {
+    font-size: small;
+    padding: 3px;
 }
 
 .infoRate {
     display: inline-block;
     margin-left: 5%;
+    margin-bottom: 0;
     opacity: 0.5;
+}
+
+.infoLink {
+    text-decoration: underline;
+    margin-left: 5%;
+    font-size: 500;
+    color: black;
+}
+
+.infoLink:hover {
+    color: rgb(255, 136, 0);
 }
 
 
@@ -112,10 +246,13 @@ header {
     background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6)), url('../img/infoImage.jpg');
 }
 
+button:focus {
+    outline: none;
+}
+
 .createRestHeading {
     color: rgb(255, 136, 0);
     padding: 5px;
-    margin: 5px;
 }
 
 #restName {
@@ -162,36 +299,24 @@ input[type=text]:focus {
 }
 
 
-/*  NEW RESTAURANT INFOWINDOW */
-
-.newInfoDiv {
-    min-width: 200px;
-    overflow: auto;
-}
-
-.newInfoImage {
-    margin-bottom: 10px;
-    height: 100px;
-    width: 100px;
-}
-
-
 /* NEW REVIEW FORM */
 
 .modal {
     text-align: center;
 }
 
+.modal-header {
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(0, 0, 0));
+    color: rgb(255, 255, 255);
+}
+
+.modalClose {
+    margin-right: 10px !important;
+    padding: 0 !important;
+}
+
 .modal-body {
     background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6)), url('../img/rate-form.jpg');
-}
-
-#addReviewButton {
-    margin: 30px;
-}
-
-.feedbackArea {
-    display: block;
 }
 
 textarea:focus,
@@ -227,4 +352,38 @@ select {
     appearance: none;
     padding: 3px;
     text-indent: 5px;
+}
+
+#addReviewButton {
+    color: black;
+    background-size: 200%;
+    margin-left: 30px;
+    border-radius: 5px;
+    background-image: linear-gradient(to left, rgb(255, 123, 0), rgb(255, 230, 0), rgb(255, 123, 0));
+    transition: 0.6s;
+}
+
+.submitReview {
+    color: white;
+    background-size: 200%;
+    margin-left: 30px;
+    border-radius: 5px;
+    background-image: linear-gradient(to left, #12CBC4, #0652DD, #12CBC4);
+    transition: 0.6s;
+}
+
+#addReviewButton:hover,
+.submitReview:hover {
+    background-position: right;
+}
+
+
+/* FOOTER */
+
+.footerLink {
+    color: rgb(255, 136, 0);
+}
+
+.footerLink:hover {
+    color: rgb(248, 206, 11);
 }

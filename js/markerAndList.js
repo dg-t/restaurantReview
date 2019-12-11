@@ -94,49 +94,54 @@ const getPlacesDetails = function(marker, infowindow) {
 
             // declare and initialize all elements for infoWindow
             const infoDiv = document.createElement("div");
+            const infoPlace = document.createElement("div");
             const infoRateDiv = document.createElement("div");
+            const divLink = document.createElement("div");
+            const divImg = document.createElement("div");
             const infoName = document.createElement("h6");
-            const infoAddress = document.createElement("p");
             const infoRate = document.createElement("p");
             const infoImage = document.createElement("img");
             const infoLink = document.createElement("a");
 
             // Check always if the detail requested exist
             // Add content and append to DOM to display restaurant info
+            if (place.photos) {
+                infoImage.src = place.photos[0].getUrl();
+                infoImage.alt = 'Restaurant image';
+                infoImage.className = 'infoImage';
+                divImg.appendChild(infoImage);
+                infoDiv.appendChild(divImg);
+            }
             if (place.name) {
                 infoName.textContent = place.name;
                 infoName.className = 'infoName';
-                infoDiv.appendChild(infoName);
-            }
-            if (place.formatted_address) {
-                infoAddress.textContent = place.formatted_address;
-                infoDiv.appendChild(infoAddress);
+                infoPlace.appendChild(infoName);
+                infoDiv.appendChild(infoPlace);
             }
             if (place.rating) {
                 infoRate.textContent = starRating(place, infoRateDiv);
                 infoRateDiv.appendChild(infoRate);
-                infoDiv.appendChild(infoRateDiv);
+                infoPlace.appendChild(infoRateDiv);
+                infoDiv.appendChild(infoPlace);
             }
             if (place.user_ratings_total) {
                 infoRate.textContent += '(' + place.user_ratings_total + ')';
                 infoRate.className = 'infoRate';
                 infoRateDiv.appendChild(infoRate);
-                infoDiv.appendChild(infoRateDiv);
+                infoPlace.appendChild(infoRateDiv);
+                infoDiv.appendChild(infoPlace);
             }
-            if (place.photos) {
-                infoImage.src = place.photos[0].getUrl({ maxHeight: 100, maxWidth: 200 });
-                infoImage.alt = 'Restaurant image';
-                infoImage.className = 'infoImage';
-                infoDiv.appendChild(infoImage);
-            }
+
             // Add link content
             infoLink.id = place.place_id;
             infoLink.href = 'detailsRestaurant.html';
             infoLink.textContent = 'More info';
             infoLink.className = 'infoLink';
             // add div class and append link
+            infoPlace.className = 'infoPlace';
             infoDiv.className = 'infoDiv';
-            infoDiv.appendChild(infoLink);
+            divLink.appendChild(infoLink);
+            infoDiv.appendChild(divLink);
 
             // Store clicked restaurant details
             infoLink.addEventListener('click', function() {

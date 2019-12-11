@@ -6,7 +6,7 @@ const getDetailsRest = async function() {
     newMarker = sessionStorage.getItem('newMarker');
 
     // fetch data sending request to a proxy, await response, and save it in a variable
-    const url = 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id=' + detailRest + '&key=MY_API_KEY';
+    const url = 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id=' + detailRest + '&key=AIzaSyB_nN8ldrp5JR-5NIYVQKS9shRVPoe43KI';
     const response = await fetch(url);
     const result = await response.json();
 
@@ -20,7 +20,7 @@ const getDetailsRest = async function() {
                 const totalRate = document.createElement('p');
                 const allReview = document.createElement('p');
                 const addReviewButton = document.createElement('button');
-                const lineBreak = document.createElement("hr");
+                // const lineBreak = document.createElement("hr");
 
                 newRestName.id = 'nameRest';
                 newRestName.textContent = newPlace[p].name;
@@ -36,10 +36,12 @@ const getDetailsRest = async function() {
                 restaurantName.appendChild(newRestName);
                 restaurantName.appendChild(totalRate);
                 restaurantName.appendChild(allReview);
-                restaurantName.appendChild(lineBreak);
+                //restaurantName.appendChild(lineBreak);
 
                 // Display reviews
                 for (r = 0; r <= newPlace[p].reviews.length; r++) {
+
+                    if (newPlace[p].reviews.length == 0) { noReview.style.display = 'block'; }
 
                     const reviews = document.createElement("div");
                     const reviewAuthor = document.createElement("p");
@@ -102,7 +104,7 @@ const getDetailsRest = async function() {
         const totalRate = document.createElement('p');
         const allReview = document.createElement('p');
         const addReviewButton = document.createElement('button');
-        const lineBreak = document.createElement("hr");
+        // const lineBreak = document.createElement("hr");
 
         restName.id = 'nameRest';
         addReviewButton.id = 'addReviewButton';
@@ -118,7 +120,7 @@ const getDetailsRest = async function() {
         restaurantName.appendChild(restName);
         restaurantName.appendChild(totalRate);
         restaurantName.appendChild(allReview);
-        restaurantName.appendChild(lineBreak);
+        // restaurantName.appendChild(lineBreak);
 
         if (restaurant.reviews) {
             // Display reviews
@@ -129,6 +131,10 @@ const getDetailsRest = async function() {
                 const rate = document.createElement("p");
                 const reviewText = document.createElement("p");
                 const lineBreak = document.createElement("hr");
+
+                reviewAuthor.className = 'displayReview';
+                rate.className = 'displayReview';
+                reviewText.className = 'displayReview';
 
                 // Create a div for each review
                 reviews.appendChild(reviewAuthor);

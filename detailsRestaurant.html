@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/bootstrap-select.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src='js/bootstrap.bundle.min.js'></script>
     <script src='js/bootstrap-select.min.js'></script>
@@ -21,37 +22,41 @@
 <body>
 
     <header class>
-        <h3>Restaurants reviews</h3>
+        <h3 class='pageTwoTitle' data-text='Restaurant reviews'>Restaurant reviews</h3>
     </header>
 
     <div class='container-fluid'>
-        <div class='row' id='detailsContainer'>
-            <div id='streetView' class='col-md-6 col-sm-offset-1'></div>
-            <div class='col-md-4' id='infoRestaurant'>
-                <div class='col-md-12' id='restaurantName'>
+        <div class='row'>
+            <div id='streetView' class='col-md-7'></div>
+            <div id='displayReviewInfo' class='col-md-5'>
+                <div id='restaurantName'>
+                </div>
+                <div id='infoRestaurant'>
+                    <div id='noReview' class='text-center'>No reviews yet</div>
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <!-- Modal  add reviews -->
-        <div class="modal fade" id="modalReview">
-            <div class="modal-dialog">
-                <div class="modal-content">
+    <!-- Modal  add reviews -->
+    <div class="modal fade" id="modalReview">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title col-12 modal-title text-center">What do you think about this place?</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title col-12 modal-title text-center">What do you think about this place?</h4>
+                    <button type="button" class="modalClose close" data-dismiss="modal">&times;</button>
+                </div>
 
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <form id="formReview">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form id="formReview">
 
-                            <input type="text" name="authorName" id="authorName" placeholder="Your Name" required>
+                        <input type="text" name="authorName" id="authorName" placeholder="Your Name" required>
 
-                            <select name="authorRating" id="authorRating" required>
+                        <select name="authorRating" id="authorRating" required>
                                     <option value="" selected>your rating:</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -60,21 +65,29 @@
                                     <option value="5">5</option>
                                 </select>
 
-                            <div>
-                                <textarea name="authorReview" id="authorReview" placeholder="Your feedback" required></textarea>
-                            </div>
-                            <button type="submit" class="button">Add Review</button>
-                        </form>
-                    </div>
-
-
+                        <div>
+                            <textarea name="authorReview" id="authorReview" placeholder="Your feedback" required></textarea>
+                        </div>
+                        <button type="submit" class="button submitReview">Add Review</button>
+                    </form>
                 </div>
+
+
             </div>
         </div>
+    </div>
 
     </div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=MY_API_KEY&libraries=places">
+    <!-- Footer -->
+    <footer class="page-footer footer w-100">
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3 bg-dark text-light">© 2019 More projects at:
+            <a class='footerLink' href="https://github.com/dg-t"> Thomas@OpenClassRooms</a>
+        </div>
+    </footer>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_nN8ldrp5JR-5NIYVQKS9shRVPoe43KI&libraries=places">
     </script>
     <script src='js/app.js'></script>
     <script src='js/displayRestaurant.js'></script>

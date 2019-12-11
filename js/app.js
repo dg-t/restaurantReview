@@ -25,6 +25,7 @@ var restaurantName = document.getElementById('restaurantName');
 var infoDiv = document.getElementById('infoRestaurant');
 var pano = document.getElementById('streetView');
 var formReview = document.getElementById("formReview");
+var noReview = document.getElementById('noReview');
 var initialRate = 0;
 var newReviewArray = [];
 var restaurant, restaurantLocation, panorama, newPlace, detailRest, newMarker, newRestPos, newRateReview, newName, newRating, newReview, newReviewDetails;
@@ -43,6 +44,8 @@ var initMap = function() {
     });
     // New restaurant infoWindow
     newInfoRestaurant = new google.maps.InfoWindow;
+
+
 
     // Get user geolocation
     if (navigator.geolocation) {
@@ -86,7 +89,7 @@ var initMap = function() {
                     clearMarkers(placeMarkers);
                     clearList();
                     // Display results
-                    sorting.value = 'all';
+                    sorting.value = 'Search all..';
                     requestBounds();
                     displayRestaurants();
                 });
@@ -97,7 +100,7 @@ var initMap = function() {
                     clearMarkers(placeMarkers);
                     clearList();
                     // Display results
-                    sorting.value = 'all';
+                    sorting.value = 'Search all..';
                     requestBounds();
                     displayRestaurants();
                 });

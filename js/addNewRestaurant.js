@@ -67,45 +67,56 @@ const newRestInfoWindow = function(newMarkerRest, newInfoRestaurant) {
         if (place[p].placeId == newMarkerRest.id) {
 
             // declare and initialize all elements for infoWindow
-            const newInfoDiv = document.createElement("div");
-            const newInfoName = document.createElement("h6");
-            const newInfoAddress = document.createElement("p");
-            const infoImage = document.createElement("img");
-            const newInfoLink = document.createElement("a");
 
-            if (place[p].name) {
-                newInfoName.textContent = place[p].name;
-                newInfoName.className = 'infoName';
-                newInfoDiv.appendChild(newInfoName);
-            }
-            if (place[p].vicinity) {
-                newInfoAddress.textContent = place[p].vicinity;
-                newInfoDiv.appendChild(newInfoAddress);
-            }
+            const infoDiv = document.createElement("div");
+            const infoPlace = document.createElement("div");
+            const divLink = document.createElement("div");
+            const divImg = document.createElement("div");
+            const infoName = document.createElement("h6");
+            const infoAddress = document.createElement("p");
+            const infoImage = document.createElement("img");
+            const infoLink = document.createElement("a");
+
+
             if (place[p].icon) {
                 infoImage.src = place[p].icon;
                 infoImage.alt = 'Restaurant image';
-                infoImage.className = 'newInfoImage';
-                newInfoDiv.appendChild(infoImage);
+                infoImage.className = 'infoImage';
+                divImg.appendChild(infoImage);
+                infoDiv.appendChild(divImg);
             }
+            if (place[p].name) {
+                infoName.textContent = place[p].name;
+                infoName.className = 'infoName';
+                infoPlace.appendChild(infoName);
+                infoDiv.appendChild(infoPlace);
+            }
+            /*
+            if (place[p].vicinity) {
+                infoAddress.textContent = place[p].vicinity;
+                infoDiv.appendChild(infoAddress);
+            }
+            */
+
 
             // Add link to see restaurant details
-            newInfoLink.id = place[p].placeId;
-            newInfoLink.href = 'detailsRestaurant.html';
-            newInfoLink.textContent = 'More info';
-            newInfoLink.className = 'infoLink';
-            // add div class and append link
-            newInfoDiv.className = 'newInfoDiv';
-            newInfoDiv.appendChild(newInfoLink);
+            infoLink.id = place[p].placeId;
+            infoLink.href = 'detailsRestaurant.html';
+            infoLink.textContent = 'More info';
+            infoLink.className = 'infoLink';
+            infoPlace.className = 'infoPlace';
+            infoDiv.className = 'infoDiv';
+            divLink.appendChild(infoLink);
+            infoDiv.appendChild(divLink);
 
             // Remove localStorage results
-            newInfoLink.addEventListener('click', function() {
+            infoLink.addEventListener('click', function() {
                 localStorage.removeItem('restaurantDetails');
             });
 
             // Close any last infoWindow and Open new restaurant info
             if (lastWindow) lastWindow.close();
-            newInfoRestaurant.setContent(newInfoDiv);
+            newInfoRestaurant.setContent(infoDiv);
             newInfoRestaurant.open(map, newMarkerRest);
             lastWindow = newInfoRestaurant;
         }

@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="css/bootstrap-select.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Acme|Nunito&display=swap" rel="stylesheet">
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src='js/bootstrap.bundle.min.js'></script>
     <script src='js/bootstrap-select.min.js'></script>
@@ -20,18 +22,22 @@
 
 <body>
 
-    <header class='text-center'>
-        <h2>Check for the Best Restaurants around you....</h2>
-    </header>
-
     <div class='container-fluid'>
         <div class='row'>
-            <div id='map' class='col-sm-8'></div>
+            <header class='col-md-12 text-center'>
+                <h2 class='pageTitle' data-text='Check for the Best Restaurants around you....'>Check for the Best Restaurants around you....</h2>
+            </header>
+        </div>
+
+
+        <div class='row'>
+            <div id='map' class='col-md-8'>
+            </div>
             <div class='col-md-4' id="sortByRating">
                 <div class="sortByRating">
-                    <label>Sort By Rating</label>
+                    <label class='labelSort'>Sort By Rating: </label>
                     <select id="sort">
-                        <option value="all">Search all..</option>
+                        <option value="Search all..">Search all..</option>
                         <option value="one">1 Star</option>
                         <option value="two">2 Star</option>
                         <option value="three">3 Star</option>
@@ -45,7 +51,17 @@
 
     </div>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=MY_API_KEY&libraries=places&v=3&callback=initMap">
+    <!-- Footer -->
+
+    <footer class="page-footer footer w-100">
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3 bg-dark text-light">© 2019 More projects at:
+            <a class='footerLink' href="https://github.com/dg-t"> Thomas@OpenClassRooms</a>
+        </div>
+    </footer>
+
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_nN8ldrp5JR-5NIYVQKS9shRVPoe43KI&libraries=places&v=3&callback=initMap">
     </script>
     <script src='js/app.js'></script>
     <script src='js/displayRestaurant.js'></script>

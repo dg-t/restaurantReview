@@ -27,13 +27,13 @@ const sortByRate = function(places) {
 
             if (sorting.value === 'one') {
 
-                if ((place.rating >= 1 && place.rating < 2) && (markerRest.rate >= 1 && markerRest.rate < 2)) {
+                if (place.rating >= 1 && place.rating < 2) {
                     createRestMarker(place);
                     createList(place);
                 }
             } else if (sorting.value === 'two') {
 
-                if ((place.rating >= 2 && place.rating < 3) && (markerRest.rate >= 2 && markerRest.rate < 3)) {
+                if (place.rating >= 2 && place.rating < 3) {
                     createRestMarker(place);
                     createList(place);
                 }

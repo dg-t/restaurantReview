@@ -17,6 +17,7 @@ const submitReview = function() {
         newRateReview += parseInt(newReviewArray[n].rating);
     }
 
+    noReview.style.display = 'none';
     $('#modalReview').modal('toggle');
 }
 
@@ -28,12 +29,16 @@ const createReview = function(newName, newRating, newReview) { //add to array an
     };
 
     // Append content to DOM to display restaurant info
-    const addReview = document.getElementById('restaurantName');
+    const addReview = document.getElementById('infoRestaurant');
     const yourReview = document.createElement("div");
     const reviewAuthor = document.createElement("p");
     const rate = document.createElement("p");
     const reviewText = document.createElement("p");
     const lineBreak = document.createElement("hr");
+
+    reviewAuthor.className = 'displayReview';
+    rate.className = 'displayReview';
+    reviewText.className = 'displayReview';
 
     // Add content to display 
     reviewAuthor.innerHTML = '<img src="../img/user.png" height="42" width="42" alt= "Author image"> <strong>' + newReviewDetails.name + '</strong>';
@@ -48,5 +53,5 @@ const createReview = function(newName, newRating, newReview) { //add to array an
     yourReview.appendChild(lineBreak);
 
     newReviewArray.push(newReviewDetails);
-    addReview.appendChild(yourReview);
+    addReview.insertBefore(yourReview, addReview.childNodes[1]);
 }

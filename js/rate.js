@@ -1,6 +1,5 @@
 // Display stars as rating
 const starRating = function(place, divInfo) {
-
     // Define maximum rate
     const stars = 5;
     // Convert rating into percentage
@@ -25,7 +24,6 @@ const sortByRate = function(places) {
 
         for (i = 0; i < places.length; i++) {
             place = places[i];
-
             if (sorting.value === 'one') {
                 if (place.rating >= 1 && place.rating < 2) {
                     createRestMarker(place);
@@ -33,42 +31,36 @@ const sortByRate = function(places) {
                     checkRate.push(place);
                 }
             } else if (sorting.value === 'two') {
-
                 if (place.rating >= 2 && place.rating < 3) {
                     createRestMarker(place);
                     createList(place);
                     checkRate.push(place);
                 }
             } else if (sorting.value === 'three') {
-
                 if (place.rating >= 3 && place.rating < 4) {
                     createRestMarker(place);
                     createList(place);
                     checkRate.push(place);
                 }
             } else if (sorting.value === 'four') {
-
                 if ((place.rating >= 4 && place.rating < 5)) {
                     createRestMarker(place);
                     createList(place);
                     checkRate.push(place);
                 }
-
             } else if (sorting.value === 'five') {
-
                 if ((place.rating == 5) && (markerRest.rate == 5)) {
                     createRestMarker(place);
                     createList(place);
                     checkRate.push(place);
                 }
             } else {
-
                 createRestMarker(place);
                 createList(place);
                 checkRate.push(place);
             }
-
         }
+
         const noOption = document.createElement('p');
         if (!(checkRate.length > 0)) {
             noOption.textContent = 'No restaurants with this rating';

@@ -14,7 +14,6 @@ const displayRestaurants = function() {
         if (lastWindow) lastWindow.close();
         restMarkersAndList();
         // getRestaurants();
-
     } else if (map.zoom <= 12) {
         outRange();
     }
@@ -45,14 +44,12 @@ const restMarkersAndList = function() {
     service.nearbySearch(request, function(results, status) {
         // Check if status is ok
         if (status == google.maps.places.PlacesServiceStatus.OK) {
-
             // Display all restaurnat
             for (i = 0; i < results.length; i++) {
                 place = results[i];
                 createRestMarker(place);
                 createList(place);
             }
-
             // Sort by rate
             sortByRate(results);
         }

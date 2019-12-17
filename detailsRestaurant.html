@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Acme%7CNunito&display=swap" rel="stylesheet">
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src='js/bootstrap.bundle.min.js'></script>
     <script src='js/bootstrap-select.min.js'></script>
@@ -28,8 +29,7 @@
             </header>
         </div>
 
-
-        <div class='row'>
+        <div class='row detailsContainer'>
             <div id='streetView' class='col-lg-7'></div>
             <div id='displayReviewInfo' class='col-lg-5'>
                 <div id='restaurantName'>
@@ -56,9 +56,7 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <form id="formReview">
-
                         <input type="text" name="authorName" id="authorName" placeholder="Your Name" required>
-
                         <select name="authorRating" id="authorRating" required>
                                     <option value="" selected>your rating:</option>
                                     <option value="1">1</option>
@@ -67,7 +65,6 @@
                                     <option value="4">4</option>
                                     <option value="5">5</option>
                                 </select>
-
                         <div>
                             <textarea name="authorReview" id="authorReview" placeholder="Your feedback" required></textarea>
                         </div>
@@ -75,11 +72,8 @@
                     </form>
                 </div>
 
-
             </div>
         </div>
-    </div>
-
     </div>
 
     <!-- Footer -->

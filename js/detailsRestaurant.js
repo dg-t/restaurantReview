@@ -20,7 +20,6 @@ const getDetailsRest = async function() {
                 const totalRate = document.createElement('p');
                 const allReview = document.createElement('p');
                 const addReviewButton = document.createElement('button');
-                // const lineBreak = document.createElement("hr");
 
                 newRestName.id = 'nameRest';
                 newRestName.textContent = newPlace[p].name;
@@ -36,7 +35,6 @@ const getDetailsRest = async function() {
                 restaurantName.appendChild(newRestName);
                 restaurantName.appendChild(totalRate);
                 restaurantName.appendChild(allReview);
-                //restaurantName.appendChild(lineBreak);
 
                 // Display reviews
                 for (r = 0; r <= newPlace[p].reviews.length; r++) {
@@ -104,7 +102,6 @@ const getDetailsRest = async function() {
         const totalRate = document.createElement('p');
         const allReview = document.createElement('p');
         const addReviewButton = document.createElement('button');
-        // const lineBreak = document.createElement("hr");
 
         restName.id = 'nameRest';
         addReviewButton.id = 'addReviewButton';
@@ -120,7 +117,6 @@ const getDetailsRest = async function() {
         restaurantName.appendChild(restName);
         restaurantName.appendChild(totalRate);
         restaurantName.appendChild(allReview);
-        // restaurantName.appendChild(lineBreak);
 
         if (restaurant.reviews) {
             // Display reviews

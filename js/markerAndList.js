@@ -36,8 +36,6 @@ const createRestMarker = function(store) {
 
     // Create restaurants markers and display restaurants list
     placeMarkers.push(markerRest);
-    //createList(store)
-
 }
 
 // Create a DOM list with id
@@ -53,8 +51,6 @@ const createList = function(restaurant) {
 
     restLink.appendChild(restName);
     restLink.appendChild(address);
-    // restLink.appendChild(restReview);
-    // restLink.appendChild(lineBreak);
     listRestaurant.appendChild(restLink);
 
     // Add content to display 

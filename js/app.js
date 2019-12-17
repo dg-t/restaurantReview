@@ -19,7 +19,7 @@ var newRestId = -1;
 var totalRating = 0;
 var restaurantIsNew = true;
 
-// Variables for second html page
+// Variables second html page
 var pageResult = document.getElementById('detailsContainer');
 var restaurantName = document.getElementById('restaurantName');
 var infoDiv = document.getElementById('infoRestaurant');
@@ -45,8 +45,6 @@ var initMap = function() {
     // New restaurant infoWindow
     newInfoRestaurant = new google.maps.InfoWindow;
 
-
-
     // Get user geolocation
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -61,7 +59,6 @@ var initMap = function() {
 
                 // Create infoWindow for user position
                 infoCurrentPos = new google.maps.InfoWindow;
-
                 // Create marker for user current position
                 markerUserPos = new google.maps.Marker({
                     map: map,

@@ -41,7 +41,7 @@ const createReview = function(newName, newRating, newReview) { //add to array an
     reviewText.className = 'displayReview';
 
     // Add content to display 
-    reviewAuthor.innerHTML = '<img src="../img/user.png" height="42" width="42" alt= "Author image"> <strong>' + newReviewDetails.name + '</strong>';
+    reviewAuthor.innerHTML = '<img src="./img/user.png" height="42" width="42" alt= "Author image"> <strong>' + newReviewDetails.name + '</strong>';
     reviewText.textContent = newReviewDetails.review;
     // Add reviews rating as stars
     starRating(newReviewDetails, rate);
